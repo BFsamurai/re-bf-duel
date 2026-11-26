@@ -512,6 +512,12 @@ zh:[
 ["玛基娜","卡牌店店长","C级","照顾型女仆","卡牌店“Ex Machina”的店长。以温和的为人守护决斗者们，但也有传闻说她隐藏了真实实力。",["普通","店长"]]
 ]
 };
+var I18N_FILTER = {
+ja:{d:"D団",g:"ガーディアンズ",j:"邪神教",u:"ユニコーン社",r:"アキバレンジャー",s:"デュエル塾",n:"無所属・一般"},
+en:{d:"Team D",g:"Guardians",j:"Evil God Cult",u:"Unicorn Inc.",r:"Akiba Rangers",s:"Duel Academy",n:"Unaffiliated"},
+ko:{d:"D단",g:"가디언즈",j:"사신교",u:"유니콘사",r:"아키바 레인저",s:"듀얼 학원",n:"무소속·일반"},
+zh:{d:"D团",g:"守护者",j:"邪神教",u:"独角兽公司",r:"秋叶原战队",s:"决斗学塾",n:"无所属·普通"}
+};
 var currentLang = "ja";
 var currentFilter = "all";
 function localizedFactions(lang){
@@ -548,12 +554,14 @@ setText(document.getElementById("filterAllBtn"), ui.filterAll);
 setText(document.getElementById("langChangeLabel"), ui.langLabel);
 setText(document.getElementById("emptyNote"), ui.empty);
 var facs = localizedFactions(lang);
-var fbtns = document.querySelectorAll("#filters.fbtn[data-filter]");
+var fbtns = document.querySelectorAll("#filters .fbtn[data-filter]");
+var filterLabels = I18N_FILTER[lang] || I18N_FILTER.ja;
 fbtns.forEach(function(b){
 var f = b.getAttribute("data-filter");
 if(f==="all") return;
+if(filterLabels[f]){ b.textContent = filterLabels[f]; return; }
 var found = facs.filter(function(x){ return x.id===f;})[0];
-if(found) b.textContent = (lang==="ja" && f==="n")? "無所属・一般": found.name;
+if(found) b.textContent = found.name;
 });
 var heads = document.querySelectorAll(".sec-head");
 function setHead(idx, title, sub){
